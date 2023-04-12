@@ -1,29 +1,54 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6">
-        <h3>Canguro 1</h3>
-        <div class="col-md-5">
-          <label for="posicionInicial1" class="form-label">Posicion inicial: </label>
-          <input type="text" class="form-control" id="posicionInicial1" required>
-        </div>
-        <div class="col-md-5">
-          <label for="velocidad1" class="form-label">Velocidad: </label>
-          <input type="text" class="form-control" id="velocidad1" required>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <h3>Canguro 2</h3>
-        <div class="col-md-5">
-          <label for="posicionInicial2" class="form-label">Posicion inicial: </label>
-          <input type="text" class="form-control" id="posicionInicial2" required>
-        </div>
-        <div class="col-md-5">
-          <label for="velocidad1" class="form-label">Velocidad</label>
-          <input type="text" class="form-control" id="velocidad1" required>
-        </div>
-      </div>
+<div class="card mt-4">
+    <div class="card-header text-center">
+        <h1>Circo</h1>
     </div>
-    <div class="row" *ngIf="respuesta.length > 0">
-      <h4>¿Su encuentro es posible? {{respuesta}}</h4>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <h3>Canguro 1</h3>
+                <div>
+                    <label for="posicionInicial1" class="form-label">Posicion inicial: </label>
+                    <input type="text" class="form-control" id="posicionInicial1" mask="00000" [(ngModel)]="x1">
+                    <span *ngIf="!x1" class="text-danger">Ingrese un numero</span>
+                    <span *ngIf="x1 && !validarX1()" class="text-danger">El valor debe estar entre 0 y 10000</span>
+                </div>
+                <div>
+                    <label for="velocidad1" class="form-label">Velocidad: </label>
+                    <input type="text" class="form-control" id="velocidad1" mask="00000" [(ngModel)]="v1">
+                    <span *ngIf="!v1" class="text-danger">Ingrese un numero</span>
+                    <span *ngIf="v1 && !validarV1()" class="text-danger">El valor debe estar entre 1 y 10000</span>
+                </div>
+            </div>
+            <div class="col-md-6 align-self-center">
+                <h3>Canguro 2</h3>
+                <div>
+                    <label for="posicionInicial2" class="form-label">Posicion inicial: </label>
+                    <input type="text" class="form-control" id="posicionInicial2" mask="00000" [(ngModel)]="x2">
+                    <span *ngIf="!x2" class="text-danger">Ingrese un numero</span>
+                    <span *ngIf="x2 && !validarX2()" class="text-danger">El valor debe estar entre 0 y 10000, y tiene que ser mayor a la posicion inicial del canguro 1</span>
+                </div>
+                <div>
+                    <label for="velocidad2" class="form-label">Velocidad: </label>
+                    <input type="text" class="form-control" id="velocidad2" mask="00000" [(ngModel)]="v2">
+                    <span *ngIf="!v2" class="text-danger">Ingrese un numero</span>
+                    <span *ngIf="v2 && !validarV2()" class="text-danger">El valor debe estar entre 1 y 10000</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="row text-center">
+        <p class="lead">
+            Si el primer canguro se mueve igual o mas lento que el segundo canguro, no se van a encontrar.<br>
+            Si el resto entre la diferencia de posiciones y de velocidad es igual a 0, se van a encontrar en algun punto.
+        </p>
+        <p class="lead">
+        </p>
+    </div>
+    <div class="card-footer text-center">
+        <button role="button" class="btn btn-primary" (click)="calcularEncuentro()"
+        [disabled]="!validarX1() || !validarV1() || !validarX2() || !validarV2()">
+            Calcular
+        </button>
+        <h4>¿Su encuentro es posible? {{respuesta}}</h4>
+    </div>
+</div>
